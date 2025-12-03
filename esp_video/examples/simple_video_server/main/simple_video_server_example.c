@@ -28,6 +28,9 @@
 #include "lwip/apps/netbiosns.h"
 #include "example_video_common.h"
 
+#include "esp_netif.h"
+#include "esp_eth.h"
+
 #define EXAMPLE_CAMERA_VIDEO_BUFFER_NUMBER  CONFIG_EXAMPLE_CAMERA_VIDEO_BUFFER_NUMBER
 
 #define EXAMPLE_JPEG_ENC_QUALITY            CONFIG_EXAMPLE_JPEG_COMPRESSION_QUALITY
@@ -772,6 +775,67 @@ static void initialise_mdns(void)
                                      sizeof(serviceTxtData) / sizeof(serviceTxtData[0])));
 }
 
+static void set_static_ip(esp_netif_t *netif)
+{
+    // Stop DHCP so we don't look for a router
+    esp_netif_dhcpc_stop(netif);
+
+    esp_netif_ip_info_t ip_info;
+    
+    // IP settings
+    esp_netif_str_to_ip4("192.168.1.20", &ip_info.ip);      // ESP32 IP
+    esp_netif_str_to_ip4("192.168.1.10", &ip_info.gw);       // Laptop IP
+    esp_netif_str_to_ip4("255.255.255.0", &ip_info.netmask);
+
+    esp_netif_set_ip_info(netif, &ip_info);
+    ESP_LOGI(TAG, "Static IP set to: 192.168.1.20");
+}
+
+static esp_eth_handle_t eth_init_manual(esp_netif_t *eth_netif)
+{
+    eth_mac_config_t mac_config = ETH_MAC_DEFAULT_CONFIG();
+    eth_phy_config_t phy_config = ETH_PHY_DEFAULT_CONFIG();
+    phy_config.phy_addr = CONFIG_EXAMPLE_ETH_PHY_ADDR;
+    phy_config.reset_gpio_num = CONFIG_EXAMPLE_ETH_PHY_RST_GPIO;
+
+    // --- FIX IS HERE: UPDATED FOR ESP-IDF v5.5 ---
+    eth_esp32_emac_config_t esp32_emac_config = ETH_ESP32_EMAC_DEFAULT_CONFIG();
+    // New struct format:
+    esp32_emac_config.smi_gpio.mdc_num = CONFIG_EXAMPLE_ETH_MDC_GPIO;
+    esp32_emac_config.smi_gpio.mdio_num = CONFIG_EXAMPLE_ETH_MDIO_GPIO;
+    // ---------------------------------------------
+    
+    esp_eth_mac_t *mac = esp_eth_mac_new_esp32(&esp32_emac_config, &mac_config);
+    esp_eth_phy_t *phy = NULL;
+
+    // Detect PHY type from menuconfig
+#if defined(CONFIG_EXAMPLE_ETH_PHY_IP101)
+    phy = esp_eth_phy_new_ip101(&phy_config);
+#elif defined(CONFIG_EXAMPLE_ETH_PHY_RTL8201)
+    phy = esp_eth_phy_new_rtl8201(&phy_config);
+#elif defined(CONFIG_EXAMPLE_ETH_PHY_LAN87xx)
+    phy = esp_eth_phy_new_lan87xx(&phy_config);
+#elif defined(CONFIG_EXAMPLE_ETH_PHY_DP83848)
+    phy = esp_eth_phy_new_dp83848(&phy_config);
+#elif defined(CONFIG_EXAMPLE_ETH_PHY_KSZ8041)
+    phy = esp_eth_phy_new_ksz8041(&phy_config);
+#endif
+
+    if (phy == NULL) {
+        ESP_LOGE(TAG, "PHY init failed. Check menuconfig.");
+        return NULL;
+    }
+
+    esp_eth_config_t config = ETH_DEFAULT_CONFIG(mac, phy);
+    esp_eth_handle_t eth_handle = NULL;
+    ESP_ERROR_CHECK(esp_eth_driver_install(&config, &eth_handle));
+    
+    void *glue = esp_eth_new_netif_glue(eth_handle);
+    ESP_ERROR_CHECK(esp_netif_attach(eth_netif, glue));
+
+    return eth_handle;
+}
+
 void app_main(void)
 {
     esp_err_t ret = nvs_flash_init();
@@ -789,15 +853,32 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
 
-    initialise_mdns();
-    netbiosns_init();
-    netbiosns_set_name(EXAMPLE_MDNS_HOST_NAME);
+
+    // initialise_mdns();
+    // netbiosns_init();
+    // netbiosns_set_name(EXAMPLE_MDNS_HOST_NAME);
 
     /* This helper function configures Wi-Fi or Ethernet, as selected in menuconfig.
      * Read "Establishing Wi-Fi or Ethernet Connection" section in
      * examples/protocols/README.md for more information about this function.
-     */
-    ESP_ERROR_CHECK(example_connect());
+     */ 
+    //ESP_ERROR_CHECK(example_connect());
+
+    esp_netif_config_t cfg = ESP_NETIF_DEFAULT_ETH();
+    esp_netif_t *eth_netif = esp_netif_new(&cfg);
+
+    // Initialize Hardware
+    esp_eth_handle_t eth_handle = eth_init_manual(eth_netif);
+
+    // Set Static IP Immediately (Before starting the driver)
+    set_static_ip(eth_netif);
+
+    // Start Hardware
+    ESP_ERROR_CHECK(esp_eth_start(eth_handle));
+
+    initialise_mdns(); 
+    netbiosns_init();
+    netbiosns_set_name(EXAMPLE_MDNS_HOST_NAME);
 
     web_cam_video_config_t config[] = {
 #if EXAMPLE_ENABLE_MIPI_CSI_CAM_SENSOR
@@ -828,9 +909,7 @@ void app_main(void)
     };
 
     int config_count = sizeof(config) / sizeof(config[0]);
-
-    assert(config_count > 0);
     ESP_ERROR_CHECK(start_cam_web_server(config, config_count));
 
-    ESP_LOGI(TAG, "Camera web server starts");
+    ESP_LOGI(TAG, "READY! Go to http://192.168.1.20 in your browser.");
 }
