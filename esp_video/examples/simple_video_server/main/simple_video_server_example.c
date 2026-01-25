@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: ESPRESSIF MIT
  */
-
+#include "lwip/sockets.h"
 #include <string.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -30,6 +30,8 @@
 
 #include "esp_netif.h"
 #include "esp_eth.h"
+
+
 
 #define EXAMPLE_CAMERA_VIDEO_BUFFER_NUMBER  CONFIG_EXAMPLE_CAMERA_VIDEO_BUFFER_NUMBER
 
@@ -399,73 +401,91 @@ static esp_err_t static_file_handler(httpd_req_t *req)
     return ESP_FAIL;
 }
 
+
+// static esp_err_t image_stream_handler(httpd_req_t *req)
+// {
+//     esp_err_t ret;
+//     struct v4l2_buffer buf;
+//     char http_string[128];
+//     bool locked = false;
+//     web_cam_video_t *video = (web_cam_video_t *)req->user_ctx;
+
+//     const TickType_t xDelay = pdMS_TO_TICKS(83);
+
+//     ESP_RETURN_ON_FALSE(snprintf(http_string, sizeof(http_string), "%" PRIu32, video->frame_rate) > 0,
+//                         ESP_FAIL, TAG, "failed to format framerate buffer");
+
+//     ESP_RETURN_ON_ERROR(httpd_resp_set_type(req, STREAM_CONTENT_TYPE), TAG, "failed to set content type");
+//     ESP_RETURN_ON_ERROR(httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*"), TAG, "failed to set access control allow origin");
+//     ESP_RETURN_ON_ERROR(httpd_resp_set_hdr(req, "X-Framerate", http_string), TAG, "failed to set x framerate");
+
+//     while (1) {
+//         int hlen;
+//         struct timespec ts;
+//         uint32_t jpeg_encoded_size;
+
+//         locked = false;
+
+//         memset(&buf, 0, sizeof(buf));
+//         buf.type   = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+//         buf.memory = V4L2_MEMORY_MMAP;
+//         ESP_RETURN_ON_ERROR(ioctl(video->fd, VIDIOC_DQBUF, &buf), TAG, "failed to receive video frame");
+//         if (!(buf.flags & V4L2_BUF_FLAG_DONE)) {
+//             ESP_RETURN_ON_ERROR(ioctl(video->fd, VIDIOC_QBUF, &buf), TAG, "failed to queue video frame");
+//             continue;
+//         }
+
+//         ESP_GOTO_ON_ERROR(httpd_resp_send_chunk(req, STREAM_BOUNDARY, strlen(STREAM_BOUNDARY)), fail0, TAG, "failed to send boundary");
+
+//         if (video->pixel_format == V4L2_PIX_FMT_JPEG) {
+//             video->jpeg_out_buf = video->buffer[buf.index];
+//             jpeg_encoded_size = buf.bytesused;
+//         } else {
+//             ESP_GOTO_ON_FALSE(xSemaphoreTake(video->sem, portMAX_DELAY) == pdPASS, ESP_FAIL, fail0, TAG, "failed to take semaphore");
+//             locked = true;
+
+//             ESP_GOTO_ON_ERROR(example_encoder_process(video->encoder_handle, video->buffer[buf.index], video->buffer_size,
+//                               video->jpeg_out_buf, video->jpeg_out_size, &jpeg_encoded_size),
+//                               fail0, TAG, "failed to encode video frame");
+//         }
+
+//         ESP_GOTO_ON_ERROR(clock_gettime(CLOCK_MONOTONIC, &ts), fail0, TAG, "failed to get time");
+//         ESP_GOTO_ON_FALSE((hlen = snprintf(http_string, sizeof(http_string), STREAM_PART, jpeg_encoded_size, ts.tv_sec, ts.tv_nsec)) > 0,
+//                           ESP_FAIL, fail0, TAG, "failed to format part buffer");
+//         ESP_GOTO_ON_ERROR(httpd_resp_send_chunk(req, http_string, hlen), fail0, TAG, "failed to send boundary");
+
+//         ESP_GOTO_ON_ERROR(httpd_resp_send_chunk(req, (char *)video->jpeg_out_buf, jpeg_encoded_size), fail0, TAG, "failed to send jpeg");
+//         if (locked) {
+//             xSemaphoreGive(video->sem);
+//             locked = false;
+//         }
+
+//         ESP_RETURN_ON_ERROR(ioctl(video->fd, VIDIOC_QBUF, &buf), TAG, "failed to queue video frame");
+
+//         vTaskDelay(xDelay);
+//     }
+
+//     return ESP_OK;
+
+// fail0:
+//     if (locked) {
+//         xSemaphoreGive(video->sem);
+//     }
+//     ioctl(video->fd, VIDIOC_QBUF, &buf);
+//     return ret;
+// }
+
 static esp_err_t image_stream_handler(httpd_req_t *req)
 {
-    esp_err_t ret;
-    struct v4l2_buffer buf;
-    char http_string[128];
-    bool locked = false;
-    web_cam_video_t *video = (web_cam_video_t *)req->user_ctx;
-
-    ESP_RETURN_ON_FALSE(snprintf(http_string, sizeof(http_string), "%" PRIu32, video->frame_rate) > 0,
-                        ESP_FAIL, TAG, "failed to format framerate buffer");
-
-    ESP_RETURN_ON_ERROR(httpd_resp_set_type(req, STREAM_CONTENT_TYPE), TAG, "failed to set content type");
-    ESP_RETURN_ON_ERROR(httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*"), TAG, "failed to set access control allow origin");
-    ESP_RETURN_ON_ERROR(httpd_resp_set_hdr(req, "X-Framerate", http_string), TAG, "failed to set x framerate");
-
-    while (1) {
-        int hlen;
-        struct timespec ts;
-        uint32_t jpeg_encoded_size;
-
-        locked = false;
-
-        memset(&buf, 0, sizeof(buf));
-        buf.type   = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-        buf.memory = V4L2_MEMORY_MMAP;
-        ESP_RETURN_ON_ERROR(ioctl(video->fd, VIDIOC_DQBUF, &buf), TAG, "failed to receive video frame");
-        if (!(buf.flags & V4L2_BUF_FLAG_DONE)) {
-            ESP_RETURN_ON_ERROR(ioctl(video->fd, VIDIOC_QBUF, &buf), TAG, "failed to queue video frame");
-            continue;
-        }
-
-        ESP_GOTO_ON_ERROR(httpd_resp_send_chunk(req, STREAM_BOUNDARY, strlen(STREAM_BOUNDARY)), fail0, TAG, "failed to send boundary");
-
-        if (video->pixel_format == V4L2_PIX_FMT_JPEG) {
-            video->jpeg_out_buf = video->buffer[buf.index];
-            jpeg_encoded_size = buf.bytesused;
-        } else {
-            ESP_GOTO_ON_FALSE(xSemaphoreTake(video->sem, portMAX_DELAY) == pdPASS, ESP_FAIL, fail0, TAG, "failed to take semaphore");
-            locked = true;
-
-            ESP_GOTO_ON_ERROR(example_encoder_process(video->encoder_handle, video->buffer[buf.index], video->buffer_size,
-                              video->jpeg_out_buf, video->jpeg_out_size, &jpeg_encoded_size),
-                              fail0, TAG, "failed to encode video frame");
-        }
-
-        ESP_GOTO_ON_ERROR(clock_gettime(CLOCK_MONOTONIC, &ts), fail0, TAG, "failed to get time");
-        ESP_GOTO_ON_FALSE((hlen = snprintf(http_string, sizeof(http_string), STREAM_PART, jpeg_encoded_size, ts.tv_sec, ts.tv_nsec)) > 0,
-                          ESP_FAIL, fail0, TAG, "failed to format part buffer");
-        ESP_GOTO_ON_ERROR(httpd_resp_send_chunk(req, http_string, hlen), fail0, TAG, "failed to send boundary");
-
-        ESP_GOTO_ON_ERROR(httpd_resp_send_chunk(req, (char *)video->jpeg_out_buf, jpeg_encoded_size), fail0, TAG, "failed to send jpeg");
-        if (locked) {
-            xSemaphoreGive(video->sem);
-            locked = false;
-        }
-
-        ESP_RETURN_ON_ERROR(ioctl(video->fd, VIDIOC_QBUF, &buf), TAG, "failed to queue video frame");
-    }
-
+    // Simple status message
+    const char *resp_str = "ESP32-P4 UDP Stream is RUNNING in background.\n"
+                           "Target: 192.168.1.10:5000\n"
+                           "Check your Python script!";
+    
+    httpd_resp_set_type(req, "text/plain");
+    httpd_resp_send(req, resp_str, HTTPD_RESP_USE_STRLEN);
+    
     return ESP_OK;
-
-fail0:
-    if (locked) {
-        xSemaphoreGive(video->sem);
-    }
-    ioctl(video->fd, VIDIOC_QBUF, &buf);
-    return ret;
 }
 
 static esp_err_t capture_image_handler(httpd_req_t *req)
@@ -745,6 +765,179 @@ static esp_err_t http_server_init(web_cam_t *web_cam)
     return ESP_OK;
 }
 
+// ============================================================================
+//  AUTO UDP STREAM TASK (Starts automatically, no browser needed)
+// ============================================================================
+static void udp_stream_task(void *args)
+{
+    web_cam_video_t *video = (web_cam_video_t *)args;
+    struct v4l2_buffer buf;
+    
+    // Setup Destination (Nano/Laptop IP)
+    struct sockaddr_in dest_addr;
+    dest_addr.sin_addr.s_addr = inet_addr("192.168.1.10");
+    dest_addr.sin_family = AF_INET;
+    dest_addr.sin_port = htons(5000);
+
+    int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
+    if (sock < 0) {
+        ESP_LOGE(TAG, "Unable to create socket: errno %d", errno);
+        vTaskDelete(NULL);
+        return;
+    }
+    ESP_LOGI(TAG, "UDP Stream Task Started at ~12 FPS");
+
+    while (1) {
+        uint32_t final_size = 0;
+        uint8_t *final_buffer = NULL;
+        bool locked = false;
+
+        memset(&buf, 0, sizeof(buf));
+        buf.type   = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+        buf.memory = V4L2_MEMORY_MMAP;
+
+        // 1. Dequeue Frame
+        if (ioctl(video->fd, VIDIOC_DQBUF, &buf) != 0) {
+            vTaskDelay(pdMS_TO_TICKS(10));
+            continue;
+        }
+
+        // 2. Prepare Data
+        if (video->pixel_format == V4L2_PIX_FMT_JPEG) {
+            final_buffer = video->buffer[buf.index];
+            final_size = buf.bytesused;
+        } else {
+            if (xSemaphoreTake(video->sem, portMAX_DELAY) == pdPASS) {
+                locked = true;
+                if (example_encoder_process(video->encoder_handle, 
+                                            video->buffer[buf.index], video->buffer_size,
+                                            video->jpeg_out_buf, video->jpeg_out_size, 
+                                            &final_size) == ESP_OK) {
+                    final_buffer = video->jpeg_out_buf;
+                }
+            }
+        }
+
+        // 3. Send UDP Packet
+        if (final_buffer && final_size > 0) {
+            sendto(sock, final_buffer, final_size, 0, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
+        }
+
+        if (locked) {
+            xSemaphoreGive(video->sem);
+        }
+
+        // 4. Requeue Buffer
+        ioctl(video->fd, VIDIOC_QBUF, &buf);
+
+        // 5. FPS Control
+        // 1000ms / 12fps = 83ms delay
+        vTaskDelay(pdMS_TO_TICKS(83));
+    }
+
+    close(sock);
+    vTaskDelete(NULL);
+}
+
+// ============================================================================
+//  TCP STREAM TASK (Reliable, requires "Length Header")
+// ============================================================================
+static void tcp_stream_task(void *args)
+{
+    web_cam_video_t *video = (web_cam_video_t *)args;
+    struct v4l2_buffer buf;
+    
+    // 1. Setup Destination (Your Laptop/Nano IP)
+    struct sockaddr_in dest_addr;
+    dest_addr.sin_addr.s_addr = inet_addr("192.168.1.10"); // <--- CONFIRM IP
+    dest_addr.sin_family = AF_INET;
+    dest_addr.sin_port = htons(5000);
+
+    while (1) { // Connection Retry Loop
+        ESP_LOGI(TAG, "TCP: Attempting to connect to 192.168.1.10:5000...");
+        
+        // Change SOCK_DGRAM (UDP) to SOCK_STREAM (TCP)
+        int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
+        if (sock < 0) {
+            ESP_LOGE(TAG, "Unable to create socket: errno %d", errno);
+            vTaskDelay(pdMS_TO_TICKS(1000));
+            continue;
+        }
+
+        // 2. TCP requires a Connection first
+        int err = connect(sock, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
+        if (err != 0) {
+            ESP_LOGE(TAG, "Socket unable to connect: errno %d", errno);
+            close(sock);
+            vTaskDelay(pdMS_TO_TICKS(1000));
+            continue;
+        }
+        ESP_LOGI(TAG, "TCP: Connected! Starting Stream...");
+
+        // 3. Main Streaming Loop
+        while (1) {
+            uint32_t final_size = 0;
+            uint8_t *final_buffer = NULL;
+            bool locked = false;
+
+            // --- Capture Frame (Same as before) ---
+            memset(&buf, 0, sizeof(buf));
+            buf.type   = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+            buf.memory = V4L2_MEMORY_MMAP;
+
+            if (ioctl(video->fd, VIDIOC_DQBUF, &buf) != 0) {
+                vTaskDelay(pdMS_TO_TICKS(10));
+                continue;
+            }
+
+            if (video->pixel_format == V4L2_PIX_FMT_JPEG) {
+                final_buffer = video->buffer[buf.index];
+                final_size = buf.bytesused;
+            } else {
+                if (xSemaphoreTake(video->sem, portMAX_DELAY) == pdPASS) {
+                    locked = true;
+                    if (example_encoder_process(video->encoder_handle, 
+                                                video->buffer[buf.index], video->buffer_size,
+                                                video->jpeg_out_buf, video->jpeg_out_size, 
+                                                &final_size) == ESP_OK) {
+                        final_buffer = video->jpeg_out_buf;
+                    }
+                }
+            }
+
+            // 4. Send Data (HEADER + BODY)
+            if (final_buffer && final_size > 0) {
+                // Step A: Send the Size of the frame (4 bytes)
+                // We send the integer directly.
+                int sent_header = send(sock, &final_size, sizeof(uint32_t), 0);
+                
+                // Step B: Send the actual JPEG data
+                int sent_body = send(sock, final_buffer, final_size, 0);
+
+                if (sent_header < 0 || sent_body < 0) {
+                    ESP_LOGE(TAG, "TCP Send Failed (Disconnect?)");
+                    // Release resources and break loop to trigger reconnect
+                    if (locked) xSemaphoreGive(video->sem);
+                    ioctl(video->fd, VIDIOC_QBUF, &buf);
+                    break; 
+                }
+            }
+
+            if (locked) xSemaphoreGive(video->sem);
+            ioctl(video->fd, VIDIOC_QBUF, &buf);
+
+            // Throttle: 12 FPS
+            vTaskDelay(pdMS_TO_TICKS(83));
+        }
+
+        // Cleanup before reconnecting
+        close(sock);
+        ESP_LOGW(TAG, "TCP: Disconnected. Retrying in 2 seconds...");
+        vTaskDelay(pdMS_TO_TICKS(2000));
+    }
+    vTaskDelete(NULL);
+}
+
 static esp_err_t start_cam_web_server(const web_cam_video_config_t *config, int config_count)
 {
     esp_err_t ret;
@@ -752,6 +945,12 @@ static esp_err_t start_cam_web_server(const web_cam_video_config_t *config, int 
 
     ESP_RETURN_ON_ERROR(new_web_cam(config, config_count, &web_cam), TAG, "Failed to new web cam");
     ESP_GOTO_ON_ERROR(http_server_init(web_cam), fail0, TAG, "Failed to init http server");
+
+    // --- CHANGE IS HERE ---
+    // Was: udp_stream_task
+    // Now: tcp_stream_task
+    xTaskCreate(tcp_stream_task, "tcp_stream", 4096, &web_cam->video[0], 5, NULL);
+    // ----------------------
 
     return ESP_OK;
 
