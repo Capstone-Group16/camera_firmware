@@ -9,7 +9,7 @@ dependencies:
     - name: espressif/cmake_utilities
       version: 0.*
     source:
-      path: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_cam_sensor
+      path: /Users/Bill/Documents/capstone_camera/camera_firmware/esp_cam_sensor
       type: local
     targets:
     - esp32p4
@@ -26,7 +26,7 @@ dependencies:
     - name: espressif/cmake_utilities
       version: 0.*
     source:
-      path: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_ipa
+      path: /Users/Bill/Documents/capstone_camera/camera_firmware/esp_ipa
       type: local
     targets:
     - esp32p4
@@ -36,7 +36,7 @@ dependencies:
     - name: idf
       version: '>=5.3'
     source:
-      path: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_sccb_intf
+      path: /Users/Bill/Documents/capstone_camera/camera_firmware/esp_sccb_intf
       type: local
     version: 0.0.6
   esp_video:
@@ -67,7 +67,7 @@ dependencies:
       - if: target in [esp32p4]
       version: ~1.2.0
     source:
-      path: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video
+      path: /Users/Bill/Documents/capstone_camera/camera_firmware/esp_video
       type: local
     targets:
     - esp32p4
@@ -257,7 +257,7 @@ dependencies:
       - if: target not in [esp32c61]
       version: '*'
     source:
-      path: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/common_components/example_video_common
+      path: /Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/common_components/example_video_common
       type: local
     version: '*'
   idf:

@@ -1,4 +1,4 @@
-# Install script for directory: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__tinyusb
+# Install script for directory: /Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/managed_components/espressif__tinyusb
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

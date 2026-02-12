@@ -10,18 +10,18 @@ if(NOT EXISTS "/Users/Bill/esp/v5.5.1/esp-idf/components/bootloader/subproject")
   file(MAKE_DIRECTORY "/Users/Bill/esp/v5.5.1/esp-idf/components/bootloader/subproject")
 endif()
 file(MAKE_DIRECTORY
-  "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader"
-  "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix"
-  "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/tmp"
-  "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp"
-  "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src"
-  "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp"
+  "/Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/bootloader"
+  "/Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/bootloader-prefix"
+  "/Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/bootloader-prefix/tmp"
+  "/Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp"
+  "/Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/bootloader-prefix/src"
+  "/Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
+    file(MAKE_DIRECTORY "/Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "/Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
 endif()

@@ -13,8 +13,8 @@ end
 
 # Load bootloader symbols
 set confirm off
-    add-symbol-file /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader/bootloader.elf
+    add-symbol-file /Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/bootloader/bootloader.elf
 set confirm on
 
 # Load application symbols
-file /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/simple_video_server.elf
+file /Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/simple_video_server.elf

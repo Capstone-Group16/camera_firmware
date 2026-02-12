@@ -219,5 +219,5 @@ const esp_ipa_config_t *esp_ipa_pipeline_get_config(const char *name)
     return NULL;
 }
 
-/* Json file: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_cam_sensor/sensors/ov5647/cfg/ov5647_default.json */
+/* Json file: /Users/Bill/Documents/capstone_camera/camera_firmware/esp_cam_sensor/sensors/ov5647/cfg/ov5647_default.json */
 

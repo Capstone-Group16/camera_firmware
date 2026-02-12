@@ -1,6 +1,6 @@
 /* Automatically generated file; DO NOT EDIT */
 /* Espressif IoT Development Framework Linker Script */
-/* Generated from: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/esp-idf/esp_system/ld/sections.ld.in */
+/* Generated from: /Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/esp-idf/esp_system/ld/sections.ld.in */
 
 /*
  * SPDX-FileCopyrightText: 2022 Espressif Systems (Shanghai) CO LTD

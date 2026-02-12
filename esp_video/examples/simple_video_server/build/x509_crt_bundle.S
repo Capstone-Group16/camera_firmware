@@ -1,4 +1,4 @@
-/* * Data converted from /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from /Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/simple_video_server/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 #if !defined (__APPLE__) && !defined (__linux__)

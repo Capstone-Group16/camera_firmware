@@ -1,4 +1,4 @@
-# Install script for directory: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_sccb_intf
+# Install script for directory: /Users/Bill/Documents/capstone_camera/camera_firmware/esp_sccb_intf
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

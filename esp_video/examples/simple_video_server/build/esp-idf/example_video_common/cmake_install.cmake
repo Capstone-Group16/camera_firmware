@@ -1,4 +1,4 @@
-# Install script for directory: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/common_components/example_video_common
+# Install script for directory: /Users/Bill/Documents/capstone_camera/camera_firmware/esp_video/examples/common_components/example_video_common
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
