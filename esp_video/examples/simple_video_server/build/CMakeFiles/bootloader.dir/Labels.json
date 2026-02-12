@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/CMakeFiles/bootloader"
+		},
+		{
+			"file" : "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/CMakeFiles/bootloader.rule"
+		},
+		{
+			"file" : "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/CMakeFiles/bootloader-complete.rule"
+		},
+		{
+			"file" : "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+		},
+		{
+			"file" : "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+		},
+		{
+			"file" : "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+		},
+		{
+			"file" : "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+		},
+		{
+			"file" : "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+		},
+		{
+			"file" : "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+		},
+		{
+			"file" : "/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"bootloader"
+		],
+		"name" : "bootloader"
+	}
+}

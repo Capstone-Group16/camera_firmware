@@ -1,0 +1,69 @@
+Command: ninja flash
+[1/5] cd /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/esp-idf/esptool_py && /Users/Bill/.espressif/python_env/idf5.5_py3.10_env/bin/python /Users/Bill/esp/v5.5.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/partition_table/partition-table.bin /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/simple_video_server.bin
+simple_video_server.bin binary size 0xf1290 bytes. Smallest app partition is 0x177000 bytes. 0x85d70 bytes (36%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] cd /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader/esp-idf/esptool_py && /Users/Bill/.espressif/python_env/idf5.5_py3.10_env/bin/python /Users/Bill/esp/v5.5.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x2000 /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/bootloader/bootloader.bin
+Bootloader binary size 0x5810 bytes. 0x7f0 bytes (8%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] cd /Users/Bill/esp/v5.5.1/esp-idf/components/esptool_py && /Users/Bill/.espressif/tools/cmake/3.30.2/CMake.app/Contents/bin/cmake -D IDF_PATH=/Users/Bill/esp/v5.5.1/esp-idf -D "SERIAL_TOOL=/Users/Bill/.espressif/python_env/idf5.5_py3.10_env/bin/python;;/Users/Bill/esp/v5.5.1/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32p4" -D "SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args" -D WORKING_DIRECTORY=/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build -P /Users/Bill/esp/v5.5.1/esp-idf/components/esptool_py/run_serial_tool.cmake
+esptool.py --chip esp32p4 -p /dev/cu.usbmodem5AB01718871 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 2MB 0x2000 bootloader/bootloader.bin 0x10000 simple_video_server.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.10.0
+Serial port /dev/cu.usbmodem5AB01718871
+Connecting....
+Chip is ESP32-P4 (revision v1.0)
+Features: High-Performance MCU
+Crystal is 40MHz
+MAC: 30:ed:a0:e2:0e:cc
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00002000 to 0x00007fff...
+Flash will be erased from 0x00010000 to 0x00101fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+SHA digest in image updated
+Compressed 22544 bytes to 13858...
+Writing at 0x00002000... (100 %)
+Wrote 22544 bytes (13858 compressed) at 0x00002000 in 0.6 seconds (effective 284.9 kbit/s)...
+Hash of data verified.
+Compressed 987792 bytes to 454516...
+Writing at 0x00010000... (3 %)
+Writing at 0x0001f11d... (7 %)
+Writing at 0x0002ed8d... (10 %)
+Writing at 0x0003a9dc... (14 %)
+Writing at 0x0004d20f... (17 %)
+Writing at 0x0005553c... (21 %)
+Writing at 0x0005c176... (25 %)
+Writing at 0x000630ad... (28 %)
+Writing at 0x0006a5d8... (32 %)
+Writing at 0x00072dea... (35 %)
+Writing at 0x0007cd9a... (39 %)
+Writing at 0x000856de... (42 %)
+Writing at 0x0008da6a... (46 %)
+Writing at 0x00096303... (50 %)
+Writing at 0x0009d89b... (53 %)
+Writing at 0x000a60d1... (57 %)
+Writing at 0x000adb2c... (60 %)
+Writing at 0x000b43e2... (64 %)
+Writing at 0x000bb657... (67 %)
+Writing at 0x000c2492... (71 %)
+Writing at 0x000c9291... (75 %)
+Writing at 0x000cfef8... (78 %)
+Writing at 0x000d712d... (82 %)
+Writing at 0x000ddb83... (85 %)
+Writing at 0x000e45f0... (89 %)
+Writing at 0x000eb988... (92 %)
+Writing at 0x000f2a39... (96 %)
+Writing at 0x000fa10e... (100 %)
+Wrote 987792 bytes (454516 compressed) at 0x00010000 in 12.0 seconds (effective 657.3 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 105...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (105 compressed) at 0x00008000 in 0.1 seconds (effective 372.5 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...

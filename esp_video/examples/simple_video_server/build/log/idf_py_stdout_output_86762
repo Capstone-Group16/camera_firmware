@@ -1,0 +1,80 @@
+Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=/Users/Bill/.espressif/python_env/idf5.5_py3.10_env/bin/python -DESP_PLATFORM=1 -DCCACHE_ENABLE=0 /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server
+-- IDF_TARGET is not set, guessed 'esp32p4' from sdkconfig '/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/sdkconfig'
+-- Found Git: /usr/bin/git (found version "2.50.1 (Apple Git-155)")
+-- Minimal build - OFF
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: /Users/Bill/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/riscv32-esp-elf-gcc
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /Users/Bill/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/riscv32-esp-elf-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /Users/Bill/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/riscv32-esp-elf-g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Building ESP-IDF components for target esp32p4
+NOTICE: Skipping optional dependency: espressif/usb
+NOTICE: Skipping optional dependency: espressif/cjson
+NOTICE: Using component placed at /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video for dependency "esp_video", specified in /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/main/idf_component.yml
+NOTICE: Using component placed at /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/common_components/example_video_common for dependency "example_video_common", specified in /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/main/idf_component.yml
+NOTICE: Using component placed at /Users/Bill/esp/v5.5.1/esp-idf/examples/common_components/protocol_examples_common for dependency "protocol_examples_common", specified in /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/main/idf_component.yml
+NOTICE: Processing 19 dependencies:
+NOTICE: [1/19] esp_cam_sensor (1.5.2) (/Users/Bill/Documents/capstone_camera/esp-video-components/esp_cam_sensor)
+NOTICE: [2/19] esp_ipa (1.2.0) (/Users/Bill/Documents/capstone_camera/esp-video-components/esp_ipa)
+NOTICE: [3/19] esp_sccb_intf (0.0.6) (/Users/Bill/Documents/capstone_camera/esp-video-components/esp_sccb_intf)
+NOTICE: [4/19] esp_video (1.3.1) (/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video)
+NOTICE: [5/19] espressif/cmake_utilities (0.5.3)
+NOTICE: [6/19] espressif/eppp_link (1.1.4)
+NOTICE: [7/19] espressif/esp_h264 (1.0.4)
+NOTICE: [8/19] espressif/esp_hosted (2.11.7)
+NOTICE: [9/19] espressif/esp_new_jpeg (1.0.0)
+NOTICE: [10/19] espressif/esp_serial_slave_link (1.1.2)
+NOTICE: [11/19] espressif/esp_tinyusb (2.1.0)
+NOTICE: [12/19] espressif/esp_wifi_remote (1.3.2)
+NOTICE: [13/19] espressif/mdns (1.9.1)
+NOTICE: [14/19] espressif/tinyusb (0.19.0~2)
+NOTICE: [15/19] espressif/usb_host_uvc (2.3.1)
+NOTICE: [16/19] espressif/wifi_remote_over_eppp (0.3.1)
+NOTICE: [17/19] example_video_common (*) (/Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/common_components/example_video_common)
+NOTICE: [18/19] protocol_examples_common (*) (/Users/Bill/esp/v5.5.1/esp-idf/examples/common_components/protocol_examples_common)
+NOTICE: [19/19] idf (5.5.1)
+-- Using new driver components (IDF ≥ 5.0)
+NOTICE: Skipping optional dependency: espressif/usb
+NOTICE: Skipping optional dependency: espressif/cjson
+-- Project sdkconfig file /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/sdkconfig
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/riscv/ld/rom.api.ld
+-- Found Python3: /Users/Bill/.espressif/python_env/idf5.5_py3.10_env/bin/python (found version "3.10.3") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS - Success
+-- USING O3
+-- App "simple_video_server" version: 4126f60-dirty
+-- Adding linker script /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/esp-idf/esp_system/ld/memory.ld
+-- Adding linker script /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build/esp-idf/esp_system/ld/sections.ld.in
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/esp_rom/esp32p4/ld/esp32p4.rom.ld
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/esp_rom/esp32p4/ld/esp32p4.rom.api.ld
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/esp_rom/esp32p4/ld/esp32p4.rom.rvfp.ld
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/esp_rom/esp32p4/ld/esp32p4.rom.wdt.ld
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/esp_rom/esp32p4/ld/esp32p4.rom.systimer.ld
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/esp_rom/esp32p4/ld/esp32p4.rom.version.ld
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/esp_rom/esp32p4/ld/esp32p4.rom.libc.ld
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/esp_rom/esp32p4/ld/esp32p4.rom.libc-suboptimal_for_misaligned_mem.ld
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/esp_rom/esp32p4/ld/esp32p4.rom.newlib.ld
+-- Adding linker script /Users/Bill/esp/v5.5.1/esp-idf/components/soc/esp32p4/ld/esp32p4.peripherals.ld
+-- ESP_CAM_SENSOR: 1.5.2
+-- ESP_IPA: 1.2.0
+-- ESP_VIDEO: 1.3.1
+-- Using Hosted Wi-Fi
+-- Using new driver components (IDF ≥ 5.0)
+-- Component idf::espressif__esp_hosted will be linked with -Wl,--whole-archive
+-- Components: app_trace app_update bootloader bootloader_support bt cmock console cxx driver efuse esp-tls esp_adc esp_app_format esp_bootloader_format esp_cam_sensor esp_coex esp_common esp_driver_ana_cmpr esp_driver_bitscrambler esp_driver_cam esp_driver_dac esp_driver_gpio esp_driver_gptimer esp_driver_i2c esp_driver_i2s esp_driver_isp esp_driver_jpeg esp_driver_ledc esp_driver_mcpwm esp_driver_parlio esp_driver_pcnt esp_driver_ppa esp_driver_rmt esp_driver_sdio esp_driver_sdm esp_driver_sdmmc esp_driver_sdspi esp_driver_spi esp_driver_touch_sens esp_driver_tsens esp_driver_twai esp_driver_uart esp_driver_usb_serial_jtag esp_eth esp_event esp_gdbstub esp_hid esp_http_client esp_http_server esp_https_ota esp_https_server esp_hw_support esp_ipa esp_lcd esp_local_ctrl esp_mm esp_netif esp_netif_stack esp_partition esp_phy esp_pm esp_psram esp_ringbuf esp_rom esp_sccb_intf esp_security esp_system esp_timer esp_vfs_console esp_video esp_wifi espcoredump espressif__cmake_utilities espressif__eppp_link espressif__esp_h264 espressif__esp_hosted espressif__esp_new_jpeg espressif__esp_serial_slave_link espressif__esp_tinyusb espressif__esp_wifi_remote espressif__mdns espressif__tinyusb espressif__usb_host_uvc espressif__wifi_remote_over_eppp esptool_py example_video_common fatfs freertos hal heap http_parser idf_test ieee802154 json log lwip main mbedtls mqtt newlib nvs_flash nvs_sec_provider openthread partition_table protobuf-c protocol_examples_common protocomm pthread riscv rt sdmmc soc spi_flash spiffs tcp_transport ulp unity usb vfs wear_levelling wifi_provisioning wpa_supplicant
+-- Component paths: /Users/Bill/esp/v5.5.1/esp-idf/components/app_trace /Users/Bill/esp/v5.5.1/esp-idf/components/app_update /Users/Bill/esp/v5.5.1/esp-idf/components/bootloader /Users/Bill/esp/v5.5.1/esp-idf/components/bootloader_support /Users/Bill/esp/v5.5.1/esp-idf/components/bt /Users/Bill/esp/v5.5.1/esp-idf/components/cmock /Users/Bill/esp/v5.5.1/esp-idf/components/console /Users/Bill/esp/v5.5.1/esp-idf/components/cxx /Users/Bill/esp/v5.5.1/esp-idf/components/driver /Users/Bill/esp/v5.5.1/esp-idf/components/efuse /Users/Bill/esp/v5.5.1/esp-idf/components/esp-tls /Users/Bill/esp/v5.5.1/esp-idf/components/esp_adc /Users/Bill/esp/v5.5.1/esp-idf/components/esp_app_format /Users/Bill/esp/v5.5.1/esp-idf/components/esp_bootloader_format /Users/Bill/Documents/capstone_camera/esp-video-components/esp_cam_sensor /Users/Bill/esp/v5.5.1/esp-idf/components/esp_coex /Users/Bill/esp/v5.5.1/esp-idf/components/esp_common /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_ana_cmpr /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_bitscrambler /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_cam /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_dac /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_gpio /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_gptimer /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_i2c /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_i2s /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_isp /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_jpeg /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_ledc /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_mcpwm /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_parlio /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_pcnt /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_ppa /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_rmt /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_sdio /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_sdm /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_sdmmc /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_sdspi /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_spi /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_touch_sens /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_tsens /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_twai /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_uart /Users/Bill/esp/v5.5.1/esp-idf/components/esp_driver_usb_serial_jtag /Users/Bill/esp/v5.5.1/esp-idf/components/esp_eth /Users/Bill/esp/v5.5.1/esp-idf/components/esp_event /Users/Bill/esp/v5.5.1/esp-idf/components/esp_gdbstub /Users/Bill/esp/v5.5.1/esp-idf/components/esp_hid /Users/Bill/esp/v5.5.1/esp-idf/components/esp_http_client /Users/Bill/esp/v5.5.1/esp-idf/components/esp_http_server /Users/Bill/esp/v5.5.1/esp-idf/components/esp_https_ota /Users/Bill/esp/v5.5.1/esp-idf/components/esp_https_server /Users/Bill/esp/v5.5.1/esp-idf/components/esp_hw_support /Users/Bill/Documents/capstone_camera/esp-video-components/esp_ipa /Users/Bill/esp/v5.5.1/esp-idf/components/esp_lcd /Users/Bill/esp/v5.5.1/esp-idf/components/esp_local_ctrl /Users/Bill/esp/v5.5.1/esp-idf/components/esp_mm /Users/Bill/esp/v5.5.1/esp-idf/components/esp_netif /Users/Bill/esp/v5.5.1/esp-idf/components/esp_netif_stack /Users/Bill/esp/v5.5.1/esp-idf/components/esp_partition /Users/Bill/esp/v5.5.1/esp-idf/components/esp_phy /Users/Bill/esp/v5.5.1/esp-idf/components/esp_pm /Users/Bill/esp/v5.5.1/esp-idf/components/esp_psram /Users/Bill/esp/v5.5.1/esp-idf/components/esp_ringbuf /Users/Bill/esp/v5.5.1/esp-idf/components/esp_rom /Users/Bill/Documents/capstone_camera/esp-video-components/esp_sccb_intf /Users/Bill/esp/v5.5.1/esp-idf/components/esp_security /Users/Bill/esp/v5.5.1/esp-idf/components/esp_system /Users/Bill/esp/v5.5.1/esp-idf/components/esp_timer /Users/Bill/esp/v5.5.1/esp-idf/components/esp_vfs_console /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video /Users/Bill/esp/v5.5.1/esp-idf/components/esp_wifi /Users/Bill/esp/v5.5.1/esp-idf/components/espcoredump /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__cmake_utilities /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__eppp_link /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__esp_h264 /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__esp_hosted /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__esp_new_jpeg /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__esp_serial_slave_link /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__esp_tinyusb /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__esp_wifi_remote /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__mdns /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__tinyusb /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__usb_host_uvc /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/managed_components/espressif__wifi_remote_over_eppp /Users/Bill/esp/v5.5.1/esp-idf/components/esptool_py /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/common_components/example_video_common /Users/Bill/esp/v5.5.1/esp-idf/components/fatfs /Users/Bill/esp/v5.5.1/esp-idf/components/freertos /Users/Bill/esp/v5.5.1/esp-idf/components/hal /Users/Bill/esp/v5.5.1/esp-idf/components/heap /Users/Bill/esp/v5.5.1/esp-idf/components/http_parser /Users/Bill/esp/v5.5.1/esp-idf/components/idf_test /Users/Bill/esp/v5.5.1/esp-idf/components/ieee802154 /Users/Bill/esp/v5.5.1/esp-idf/components/json /Users/Bill/esp/v5.5.1/esp-idf/components/log /Users/Bill/esp/v5.5.1/esp-idf/components/lwip /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/main /Users/Bill/esp/v5.5.1/esp-idf/components/mbedtls /Users/Bill/esp/v5.5.1/esp-idf/components/mqtt /Users/Bill/esp/v5.5.1/esp-idf/components/newlib /Users/Bill/esp/v5.5.1/esp-idf/components/nvs_flash /Users/Bill/esp/v5.5.1/esp-idf/components/nvs_sec_provider /Users/Bill/esp/v5.5.1/esp-idf/components/openthread /Users/Bill/esp/v5.5.1/esp-idf/components/partition_table /Users/Bill/esp/v5.5.1/esp-idf/components/protobuf-c /Users/Bill/esp/v5.5.1/esp-idf/examples/common_components/protocol_examples_common /Users/Bill/esp/v5.5.1/esp-idf/components/protocomm /Users/Bill/esp/v5.5.1/esp-idf/components/pthread /Users/Bill/esp/v5.5.1/esp-idf/components/riscv /Users/Bill/esp/v5.5.1/esp-idf/components/rt /Users/Bill/esp/v5.5.1/esp-idf/components/sdmmc /Users/Bill/esp/v5.5.1/esp-idf/components/soc /Users/Bill/esp/v5.5.1/esp-idf/components/spi_flash /Users/Bill/esp/v5.5.1/esp-idf/components/spiffs /Users/Bill/esp/v5.5.1/esp-idf/components/tcp_transport /Users/Bill/esp/v5.5.1/esp-idf/components/ulp /Users/Bill/esp/v5.5.1/esp-idf/components/unity /Users/Bill/esp/v5.5.1/esp-idf/components/usb /Users/Bill/esp/v5.5.1/esp-idf/components/vfs /Users/Bill/esp/v5.5.1/esp-idf/components/wear_levelling /Users/Bill/esp/v5.5.1/esp-idf/components/wifi_provisioning /Users/Bill/esp/v5.5.1/esp-idf/components/wpa_supplicant
+-- Configuring done (16.6s)
+-- Generating done (0.6s)
+-- Build files have been written to: /Users/Bill/Documents/capstone_camera/esp-video-components/esp_video/examples/simple_video_server/build

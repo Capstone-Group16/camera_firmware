@@ -1,0 +1,5 @@
+{
+    "idf.port": "/dev/tty.usbmodem5AB01718871",
+    "idf.flashType": "JTAG",
+    "idf.currentSetup": "/Users/Bill/esp/v5.5.1/esp-idf"
+}
